@@ -1,0 +1,27 @@
+name: Weekly Grocery Scan
+
+on:
+  schedule:
+    - cron: '0 22 * * 3'  # thursday 8am AEDT (UTC+10) = wednesday 10pm UTC
+  workflow_dispatch:        # manual trigger from actions tab
+
+jobs:
+  run-drone:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run drone
+        run: python drone.py
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
