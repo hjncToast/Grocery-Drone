@@ -2,7 +2,7 @@ name: Weekly Grocery Scan
 
 on:
   schedule:
-    - cron: '0 22 * * 3'  # thursday 8am AEDT (UTC+10) = wednesday 10pm UTC
+    - cron: '0 18 * * 3'  # thursday 8am AEDT (UTC+10) = wednesday 10pm UTC
   workflow_dispatch:        # manual trigger from actions tab
 
 jobs:

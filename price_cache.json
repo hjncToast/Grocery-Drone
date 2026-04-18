@@ -1,0 +1,263 @@
+{
+  "1260754": {
+    "name": "so good almond milk",
+    "store": "coles",
+    "genre": "NUT MILK",
+    "current": 3.0,
+    "previous": 2.0,
+    "weighted": 2.433696309739867,
+    "scanned_at": "2026-04-18T20:36:56.257245"
+  },
+  "9524521": {
+    "name": "lindt 85%",
+    "store": "coles",
+    "genre": "CHOCOLATE",
+    "current": 8.5,
+    "previous": 6.75,
+    "weighted": 6.859567901234568,
+    "scanned_at": "2026-04-18T20:36:58.312553"
+  },
+  "201687": {
+    "name": "lindt 85%",
+    "store": "wool",
+    "genre": "CHOCOLATE",
+    "current": 6.8,
+    "previous": 8.5,
+    "weighted": 6.970232148104614,
+    "scanned_at": "2026-04-18T20:37:00.071737"
+  },
+  "935634": {
+    "name": "Woolworths 85% Belgian Dark Chocolate 100g",
+    "store": "wool",
+    "genre": "CHOCOLATE",
+    "current": 4.0,
+    "previous": 4.0,
+    "weighted": 4.0,
+    "scanned_at": "2026-04-18T20:37:01.685249"
+  },
+  "266980": {
+    "name": "Whitakker's dark ghana 72%",
+    "store": "wool",
+    "genre": "CHOCOLATE",
+    "current": 9.0,
+    "previous": 8.0,
+    "weighted": 7.715959595959596,
+    "scanned_at": "2026-04-18T20:37:03.412211"
+  },
+  "5365448": {
+    "name": "Whitakker's dark ghana 72%",
+    "store": "coles",
+    "genre": "CHOCOLATE",
+    "current": 9.0,
+    "previous": 8.0,
+    "weighted": 7.743714285714285,
+    "scanned_at": "2026-04-18T20:37:05.050623"
+  },
+  "813896": {
+    "name": "old gold 70%",
+    "store": "wool",
+    "genre": "CHOCOLATE",
+    "current": 4.0,
+    "previous": 5.5,
+    "weighted": 6.041537827252113,
+    "scanned_at": "2026-04-18T20:37:06.675798"
+  },
+  "2350579": {
+    "name": "old gold 70%",
+    "store": "coles",
+    "genre": "CHOCOLATE",
+    "current": 5.5,
+    "previous": 8.0,
+    "weighted": 5.989368421052632,
+    "scanned_at": "2026-04-18T20:37:08.189895"
+  },
+  "4805443": {
+    "name": "Swisse Fish Oil 2000mg 200 pills",
+    "store": "coles",
+    "genre": "SUPPLEMENTS",
+    "current": 27.5,
+    "previous": 55.0,
+    "weighted": 41.11165206101915,
+    "scanned_at": "2026-04-18T20:37:11.529384"
+  },
+  "5325476": {
+    "name": "Ultralife Vitamin D | 400 pack",
+    "store": "coles",
+    "genre": "SUPPLEMENTS",
+    "current": 15.0,
+    "previous": 30.0,
+    "weighted": 22.307692307692307,
+    "scanned_at": "2026-04-18T20:37:13.068263"
+  },
+  "4941770": {
+    "name": "Blackmores Fish Oil 1000mg Omega-3 Capsules | 400 pack",
+    "store": "coles",
+    "genre": "SUPPLEMENTS",
+    "current": 60.0,
+    "previous": 30.0,
+    "weighted": 44.455736224028904,
+    "scanned_at": "2026-04-18T20:37:14.598749"
+  },
+  "3627805": {
+    "name": "Coles I'm Perfect Avocados | 1kg",
+    "store": "coles",
+    "genre": "VEGETABLES",
+    "current": 4.5,
+    "previous": 4.7,
+    "weighted": 5.95422322775264,
+    "scanned_at": "2026-04-18T20:37:16.732150"
+  },
+  "3479297": {
+    "name": "Coles Avocados Prepacked | 5 Pack",
+    "store": "coles",
+    "genre": "VEGETABLES",
+    "current": 4.9,
+    "previous": 5.5,
+    "weighted": 6.102865761689292,
+    "scanned_at": "2026-04-18T20:37:18.332316"
+  },
+  "5833557": {
+    "name": "La Espanola Extra Virgin Olive Oil | 1L",
+    "store": "coles",
+    "genre": "SUPER VEGGIE STUFF",
+    "current": 16.0,
+    "previous": 26.0,
+    "weighted": 20.812072434607646,
+    "scanned_at": "2026-04-18T20:37:20.444771"
+  },
+  "353521": {
+    "name": "McKenzie's Split Green Peas | 500g",
+    "store": "coles",
+    "genre": "LEGUMES",
+    "current": 1.6,
+    "previous": 1.9,
+    "weighted": 1.7333333333333334,
+    "scanned_at": "2026-04-18T20:37:22.569229"
+  },
+  "130017": {
+    "name": "McKenzie's Split Yellow Peas | 500g",
+    "store": "coles",
+    "genre": "LEGUMES",
+    "current": 1.6,
+    "previous": 1.9,
+    "weighted": 1.7333333333333334,
+    "scanned_at": "2026-04-18T20:37:24.119103"
+  },
+  "8192787": {
+    "name": "Gaganis Premium Yellow Split Peas | 1kg",
+    "store": "coles",
+    "genre": "LEGUMES",
+    "current": 3.0,
+    "previous": 2.8,
+    "weighted": 2.9333333333333336,
+    "scanned_at": "2026-04-18T20:37:25.708920"
+  },
+  "753948": {
+    "name": "Katoomba Ingredients Yellow Split Peas 1kg",
+    "store": "wool",
+    "genre": "LEGUMES",
+    "current": 2.5,
+    "previous": 2.5,
+    "weighted": 2.5,
+    "scanned_at": "2026-04-18T20:37:27.283075"
+  },
+  "6288116": {
+    "name": "McKenzie's French Style Black Lentils | 375g",
+    "store": "coles",
+    "genre": "LEGUMES",
+    "current": 3.3,
+    "previous": 3.7,
+    "weighted": 3.471428571428571,
+    "scanned_at": "2026-04-18T20:37:28.857068"
+  },
+  "8133391": {
+    "name": "Coles White Seedless Grapes | approx. 1kg",
+    "store": "coles",
+    "genre": "FRUITS",
+    "current": 6.0,
+    "previous": 5.0,
+    "weighted": 7.577282485875705,
+    "scanned_at": "2026-04-18T20:37:31.064968"
+  },
+  "5164399": {
+    "name": "Creative Gourmet Frozen Blueberries | 300g",
+    "store": "coles",
+    "genre": "FROZEN FRUIT/VEG",
+    "current": 2.82,
+    "previous": 5.65,
+    "weighted": 4.707416879795397,
+    "scanned_at": "2026-04-18T20:37:33.072062"
+  },
+  "4868319": {
+    "name": "Creative Gourmet Banana Mango Pineapple | 400g",
+    "store": "coles",
+    "genre": "FROZEN FRUIT/VEG",
+    "current": 2.82,
+    "previous": 5.65,
+    "weighted": 4.707416879795397,
+    "scanned_at": "2026-04-18T20:37:34.677536"
+  },
+  "3573047": {
+    "name": "Creative Gourmet Frozen Passionfruit Pulp | 300g",
+    "store": "coles",
+    "genre": "FROZEN FRUIT/VEG",
+    "current": 2.82,
+    "previous": 5.65,
+    "weighted": 4.719269230769231,
+    "scanned_at": "2026-04-18T20:37:36.349873"
+  },
+  "3059972": {
+    "name": "Creative Gourmet Frozen Banana Chunks | 500g",
+    "store": "coles",
+    "genre": "FROZEN FRUIT/VEG",
+    "current": 2.5,
+    "previous": 5.0,
+    "weighted": 4.35848252344416,
+    "scanned_at": "2026-04-18T20:37:38.063387"
+  },
+  "6339240": {
+    "name": "Whitakker's Hazella",
+    "store": "coles",
+    "genre": "POISONS",
+    "current": 9.0,
+    "previous": 8.0,
+    "weighted": 7.800303030303031,
+    "scanned_at": "2026-04-18T20:37:40.177510"
+  },
+  "234417": {
+    "name": "Whitakker's Hazella",
+    "store": "wool",
+    "genre": "POISONS",
+    "current": 9.0,
+    "previous": 8.0,
+    "weighted": 7.724877707896575,
+    "scanned_at": "2026-04-18T20:37:41.741881"
+  },
+  "5856541": {
+    "name": "old gold peanut brittle",
+    "store": "coles",
+    "genre": "POISONS",
+    "current": 5.5,
+    "previous": 8.0,
+    "weighted": 6.159838274932614,
+    "scanned_at": "2026-04-18T20:37:43.339968"
+  },
+  "231984": {
+    "name": "old gold peanut brittle",
+    "store": "wool",
+    "genre": "POISONS",
+    "current": 8.0,
+    "previous": 5.5,
+    "weighted": 6.364201680672268,
+    "scanned_at": "2026-04-18T20:37:44.895285"
+  },
+  "4494070": {
+    "name": "ultra poison The Sweetporium Co Peanut Butter Cup | 1L",
+    "store": "coles",
+    "genre": "POISONS",
+    "current": 10.0,
+    "previous": 7.0,
+    "weighted": 8.56448202959831,
+    "scanned_at": "2026-04-18T20:37:46.544648"
+  }
+}

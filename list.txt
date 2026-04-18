@@ -1,0 +1,48 @@
+(nut milk)
+1260754, coles, so good almond milk
+
+(chocolate)
+9524521, coles, lindt 85%
+201687, wool, lindt 85%
+935634, wool, Woolworths 85% Belgian Dark Chocolate 100g
+266980, wool, Whitakker's dark ghana 72%
+5365448, coles, Whitakker's dark ghana 72%
+813896, wool, old gold 70%
+2350579, coles, old gold 70%
+,,Alter Eco Deep Dark Blackout 85%
+
+
+(supplements)
+4805443, coles, Swisse Fish Oil 2000mg 200 pills
+5325476, coles, Ultralife Vitamin D | 400 pack
+4941770, coles, Blackmores Fish Oil 1000mg Omega-3 Capsules | 400 pack
+
+(vegetables)
+3627805, coles, Coles I'm Perfect Avocados | 1kg
+3479297, coles, Coles Avocados Prepacked | 5 Pack
+
+(super veggie stuff)
+5833557, coles, La Espanola Extra Virgin Olive Oil | 1L
+
+(legumes)
+353521, coles, McKenzie's Split Green Peas | 500g
+130017, coles, McKenzie's Split Yellow Peas | 500g
+8192787, coles, Gaganis Premium Yellow Split Peas | 1kg
+753948, wool, Katoomba Ingredients Yellow Split Peas 1kg
+6288116, coles, McKenzie's French Style Black Lentils | 375g
+
+(fruits)
+8133391, coles, Coles White Seedless Grapes | approx. 1kg
+
+(frozen fruit/veg)
+5164399, coles, Creative Gourmet Frozen Blueberries | 300g
+4868319, coles, Creative Gourmet Banana Mango Pineapple | 400g
+3573047, coles, Creative Gourmet Frozen Passionfruit Pulp | 300g
+3059972, coles, Creative Gourmet Frozen Banana Chunks | 500g
+
+(poisons)
+6339240, coles, Whitakker's Hazella
+234417, wool, Whitakker's Hazella
+5856541, coles, old gold peanut brittle
+231984, wool, old gold peanut brittle
+4494070, coles, ultra poison The Sweetporium Co Peanut Butter Cup | 1L

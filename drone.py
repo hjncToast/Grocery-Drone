@@ -3,74 +3,70 @@ import time
 import os
 from statistics import mode, median, mean 
 from datetime import datetime, timedelta
+import json
+import sys
+
+from dotenv import load_dotenv
+load_dotenv()
+
+TEST_MODE = os.environ.get("TEST_MODE", "false").lower() == "true"
+WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_TEST_URL" if TEST_MODE else "DISCORD_WEBHOOK_URL")
+if not WEBHOOK_URL:
+    raise ValueError("No DISCORD_WEBHOOK_URL set in .env")
+
+# do this for testing
+# TEST_MODE=true python3 drone.py summary
+
+CACHE_FILE = "price_cache.json"
+NAME_LEN = 30
+SUMMARY_HEADER = f" ⚫`{'Item':<{NAME_LEN}} | {'Curr':>6} | {'Prev':>6} | {'Wght':>6}`"
 
 
-# item input area
-# Format: "ProductID, Store, Name" (One per line)
-RAW_DATA = """
-(nut milk)
-1260754, coles, so good almond milk
+def save_to_cache(item, current, previous, stat_weighted):
+    cache = {}
+    if os.path.exists(CACHE_FILE):
+        with open(CACHE_FILE, 'r') as f:
+            cache = json.load(f)
+    cache[item['id']] = {
+        "name": item['name'],
+        "store": item['store'],
+        "genre": item['genre'],
+        "current": current,
+        "previous": previous,
+        "weighted": stat_weighted,
+        "scanned_at": datetime.now().isoformat()
+    }
+    with open(CACHE_FILE, 'w') as f:
+        json.dump(cache, f, indent=2)
 
-(chocolate)
-9524521, coles, lindt 85%
-201687, wool, lindt 85%
-935634, wool, Woolworths 85% Belgian Dark Chocolate 100g
-
-(supplements)
-4805443, coles, Swisse Fish Oil 2000mg 200 pills
-5325476, coles, Ultralife Vitamin D | 400 pack
-4941770, coles, Blackmores Fish Oil 1000mg Omega-3 Capsules | 400 pack
-
-
-(vegetables)
-3627805, coles, Coles I'm Perfect Avocados | 1kg
-3479297, coles, Coles Avocados Prepacked | 5 Pack
-
-(super veggie stuff)
-5833557, coles, La Espanola Extra Virgin Olive Oil | 1L
-
-(legumes)
-353521, coles, McKenzie's Split Green Peas | 500g
-130017, coles, McKenzie's Split Yellow Peas | 500g
-8192787, coles, Gaganis Premium Yellow Split Peas | 1kg
-753948, wool, Katoomba Ingredients Yellow Split Peas 1kg
-6288116, coles, McKenzie's French Style Black Lentils | 375g
-
-(fruits)
-8133391, coles, Coles White Seedless Grapes | approx. 1kg
-
-(poisons [You'll never read this, right Harrison?])
-
-"""
-
-def build_watchlist(raw_text):
+def load_watchlist(filepath="list.txt"):
     watchlist = []
-    current_genre = "General"
-    for line in raw_text.strip().split('\n'):
-        line = line.strip()
-        if not line: continue
-        
-        # if line is like (chocolate), update the current genre
-        if line.startswith('(') and line.endswith(')'):
-            current_genre = line.strip('()').upper()
-            continue
+    current_genre = "GENERAL"
+    
+    if not os.path.exists(filepath):
+        print(f"⚠️ {filepath} not found. Creating a blank one.")
+        with open(filepath, 'w') as f: f.write("(GENERAL)\n000, coles, example item")
+        return []
 
-        # split by comma and clean up whitespace
-        parts = [p.strip() for p in line.split(',')]
-        if len(parts) == 3:
-            watchlist.append({
-                "id": parts[0],
-                "store": parts[1].lower(),
-                "name": parts[2],
-                "genre": current_genre # attach genre to the item
-            })
+    with open(filepath, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if not line: continue
+            # if line is like (chocolate), update the current genre
+            if line.startswith('(') and line.endswith(')'):
+                current_genre = line.strip('()').upper()
+                continue
+            # split by comma and clean up whitespace
+            parts = [p.strip() for p in line.split(',')]
+            if len(parts) == 3:
+                watchlist.append({
+                    "id": parts[0], "store": parts[1].lower(), 
+                    "name": parts[2], "genre": current_genre
+                })
     return watchlist
 
-WATCHLIST = build_watchlist(RAW_DATA)
-
-# webhook 
-WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
-
+# initialise list from file
+WATCHLIST = load_watchlist("list.txt")
 
 
 def get_verdict(curr, mo, we, mn, month_avg, all_time_min):
@@ -84,6 +80,54 @@ def get_verdict(curr, mo, we, mn, month_avg, all_time_min):
     return "😴 NO RUSH (Regular Price)"
 
 
+def calculate_weighted_average(prices):
+    if not prices: return 0
+    weights = list(range(1, len(prices) + 1))
+    weighted_sum = sum(p * w for p, w in zip(prices, weights))
+    return weighted_sum / sum(weights)
+
+
+def post_summary(summary_list, scanned_at=None):
+    header = "**Price Summary**"
+    if scanned_at:
+        header += f" *(last scan: {scanned_at[:10]})*"
+    final_summary = header + "\n" + "\n".join(summary_list)
+    
+    chunks = []
+    current_chunk = ""
+    for line in final_summary.split("\n"):
+        if len(current_chunk) + len(line) + 1 > 1900:
+            chunks.append(current_chunk)
+            current_chunk = line
+        else:
+            current_chunk += ("\n" if current_chunk else "") + line
+    if current_chunk:
+        chunks.append(current_chunk)
+
+    for chunk in chunks:
+        requests.post(WEBHOOK_URL, json={"username": "Summary Drone", "content": chunk})
+
+
+def parse_last_update(history):
+    if not history:
+        return "Unknown", "Unknown"
+    try:
+        dt_obj = datetime.fromisoformat(history[-1]['date'])
+        return dt_obj.strftime("%d/%m/%Y"), dt_obj.strftime("%H:%M:%S")
+    except ValueError:
+        return history[-1]['date'], "00:00:00"
+
+def get_month_avg(history, today_dt, fallback):
+    thirty_days_ago = today_dt - timedelta(days=30)
+    recent = []
+    for h in history:
+        try:
+            if datetime.strptime(h['date'], "%d/%m/%Y") >= thirty_days_ago:
+                recent.append(h['price'])
+        except:
+            continue
+    return mean(recent) if recent else fallback
+
 
 def run_drone():
     print("🚀 Drone engaged. ahlelele ahlelas...")
@@ -95,6 +139,9 @@ def run_drone():
     }
     requests.post(WEBHOOK_URL, json=header_payload)
 
+    summary_list = [
+                    SUMMARY_HEADER
+        ]
     last_genre = None # keep track of the genre we just processed
 
 
@@ -111,9 +158,11 @@ def run_drone():
         if item['store'] == "coles":
             api_url = f"https://data-holdings-fastapi-lp22d.ondigitalocean.app/coles/product_search/{item['id']}"
             store_url = f"https://www.coles.com.au/product/{item['id']}"
+            store_emoji = "🔴"
         else:
             api_url = f"https://data-holdings-fastapi-lp22d.ondigitalocean.app/woolworths/product_search/{item['id']}"
             store_url = f"https://www.woolworths.com.au/shop/productdetails/{item['id']}"
+            store_emoji = "🟢"
 
         try:
             response = requests.get(api_url, headers={"User-Agent": "Mozilla/5.0"})
@@ -128,47 +177,28 @@ def run_drone():
                 stat_median = median(prices) if prices else current
                 stat_mean = mean(prices) if prices else current
                 
-                # Weighted Average (Recent Bias)
-                weights = list(range(1, len(prices) + 1))
-                stat_weighted = sum(p * w for p, w in zip(prices, weights)) / sum(weights) if prices else current
+                stat_weighted = calculate_weighted_average(prices)
+                all_time_min = min(prices)
                 
                 # Previous Price
                 previous = history[-2]['price'] if len(history) >= 2 else current
+                      # last_update_date = history[-1]['date'] if history else "Unknown"
 
+                # Date formatting
+                last_update_date, last_update_time = parse_last_update(history)
 
-                # last_update_date = history[-1]['date'] if history else "Unknown"
+                #30=day average
+                month_avg = get_month_avg(history, today_dt, stat_mean)
 
-                if history:
-                    raw_date = history[-1]['date']
-                    try:
+                save_to_cache(item, current, previous, stat_weighted)
 
-                        dt_obj = datetime.fromisoformat(raw_date)
-                        last_update_date = dt_obj.strftime("%d/%m/%Y")
-                        last_update_time = dt_obj.strftime("%H:%M:%S")
-                    except ValueError:
-                        # fallback if the API uses the old DD/MM/YYYY format
-                        last_update_date = raw_date
-                        last_update_time = "00:00:00"
-                else:
-                    last_update_date = "Unknown"
-                    last_update_time = "Unknown"
-
-
-
-                all_time_min = min(prices)
+                # add to summary list
+                # <30 = Left align, 30 spaces | >6.2f = Right align, 6 spaces total
+                clean_name = item['name'][:NAME_LEN]
+                table_text = f"{clean_name:<{NAME_LEN}} | ${current:>5.2f} | ${previous:>5.2f} | ${stat_weighted:>5.2f}"
+                full_pill_line = f"{store_emoji} `{table_text}`"
                 
-
-                thirty_days_ago = today_dt - timedelta(days=30)
-                recent_prices = []
-                for h in history:
-                    try:
-                        h_date = datetime.strptime(h['date'], "%d/%m/%Y")
-                        if h_date >= thirty_days_ago:
-                            recent_prices.append(h['price'])
-                    except: continue
-                
-                month_avg = mean(recent_prices) if recent_prices else stat_mean
-
+                summary_list.append(full_pill_line)
 
                 verdict = get_verdict(current, stat_mode, stat_weighted, stat_mean, month_avg, all_time_min)
 
@@ -181,21 +211,37 @@ def run_drone():
         except Exception as e:
             print(f"⚠️ Error scanning {item['name']}: {e}")
         
-        time.sleep(1.5)
+        time.sleep(1)
 
 
-def calculate_weighted_average(prices):
-    if not prices:
-        return 0
+    if summary_list:
+        post_summary(summary_list)
 
-    weights = list(range(1, len(prices) + 1))
-    weighted_sum = sum(p * w for p, w in zip(prices, weights))
-    return weighted_sum / sum(weights)
+def run_summary():
+    if not os.path.exists(CACHE_FILE):
+        print("No cache found. Run the full drone first.")
+        return
+
+    with open(CACHE_FILE, 'r') as f:
+        cache = json.load(f)
+
+    summary_list = [SUMMARY_HEADER]
+
+    for item in WATCHLIST:
+        entry = cache.get(item['id'])
+        if not entry:
+            continue
+
+        store_emoji = "🔴" if entry['store'] == "coles" else "🟢"
+        clean_name = entry['name'][:NAME_LEN]
+        row = f"{clean_name:<{NAME_LEN}} | ${entry['current']:>5.2f} | ${entry['previous']:>5.2f} | ${entry['weighted']:>5.2f}"
+        summary_list.append(f"{store_emoji} `{row}`")
+
+    scanned_at = list(cache.values())[-1].get('scanned_at', 'Unknown')
+    post_summary(summary_list, scanned_at)
 
 
 def send_to_discord(name, store, current, previous, mode, med, mean, weight, m_avg, a_min, verdict, store_url, last_update_date, last_update_time):
-    today = datetime.now().strftime("%d/%m/%y")
-    header = f"━━━ 📦 **WEEKLY SCAN** ({today}) ━━━"
 
     def get_p(ref, curr):
         return ((ref - curr) / ref * 100) if ref > 0 else 0
@@ -227,4 +273,7 @@ def send_to_discord(name, store, current, previous, mode, med, mean, weight, m_a
     requests.post(WEBHOOK_URL, json=payload)
 
 if __name__ == "__main__":
-    run_drone()
+    if "summary" in sys.argv:
+        run_summary()
+    else:
+        run_drone()
