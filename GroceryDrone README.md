@@ -6,7 +6,7 @@ A Python bot that tracks supermarket prices across Coles and Woolworths and deli
  
 It watches a configurable list of products and, for each one, pulls historical pricing data and runs a statistical breakdown to determine whether the current price is actually worth acting on. Results are posted to a Discord channel with a plain-English verdict (with a bit of silliness) for each item.
  
-The verdict compares the current price against the mode (typical shelf price), a recency-weighted trend average, the 30-day average, and the all-time recorded low — so you can tell the difference between a genuine sale and a cosmetic discount off an inflated baseline.
+The verdict compares the current price against the mode (typical shelf price), a recency-weighted trend average, the 30-day average, and the all-time recorded low. So you can tell the difference between a genuine sale and a cosmetic discount off an inflated baseline.
  
 ## Tech
  
