@@ -17,7 +17,7 @@ The verdict compares the current price against the mode (typical shelf price), a
  
 ## Setup
  
-1. Clone the repo and add your products to `RAW_DATA` in `drone.py` using the format:
+1. Clone the repo and add your products to `list.txt` using the format:
    ```
    ProductID, store, Product Name
    ```
