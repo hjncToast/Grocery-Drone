@@ -40,6 +40,10 @@
 3573047, coles, Creative Gourmet Frozen Passionfruit Pulp | 300g
 3059972, coles, Creative Gourmet Frozen Banana Chunks | 500g
 
+(other)
+7024197, coles, Mayver's 5 seeds peanut Butter
+322673, wool, Mayver's 5 seeds peanut Butter
+
 (poisons)
 6339240, coles, Whitakker's Hazella
 234417, wool, Whitakker's Hazella
