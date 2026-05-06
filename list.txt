@@ -40,6 +40,10 @@
 3573047, coles, Creative Gourmet Frozen Passionfruit Pulp | 300g
 3059972, coles, Creative Gourmet Frozen Banana Chunks | 500g
 
+(greek yoghurt)
+2745340, coles, Chobani Greek Yogurt Natural Whole Milk | 907g
+463666, wool, Chobani Greek Yogurt Natural Whole Milk | 907g
+
 (other)
 7024197, coles, Mayver's 5 seeds peanut Butter
 322673, wool, Mayver's 5 seeds peanut Butter
